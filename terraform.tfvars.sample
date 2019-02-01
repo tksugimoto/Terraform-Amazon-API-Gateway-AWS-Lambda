@@ -1,0 +1,13 @@
+# Rename: terraform.tfvars.sample → terraform.tfvars
+
+# AWSアクセスキーID
+aws_access_key = "AKIA_____________________"
+
+# AWSシークレットアクセスキー
+aws_secret_key = "_______________________________"
+
+# リソース名のPrefix
+prefix = "api-gateway-lambda"
+
+# リージョン
+region = "ap-northeast-1"
