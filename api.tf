@@ -44,4 +44,7 @@ resource "aws_api_gateway_deployment" "production" {
 
   rest_api_id = "${aws_api_gateway_rest_api.main.id}"
   stage_name  = "prod"
+
+  # API Gatewayの変更時に再デプロイさせるためのハック
+  stage_description = "setting file hash = ${md5(file("api.tf"))}"
 }
