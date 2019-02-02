@@ -7,7 +7,6 @@ Terraform を使って API Gateway と Lambda を構築する
 - 別URLへのリクエストをLambdaにプロキシさせる
 	- 制約
 		- GETリクエストのみ
-		- レスポンスはテキストのみ
 	- `?type=proxy&target=<encodedURL>`
 		- `type=proxy`
 		- `target=<encodedURL>`

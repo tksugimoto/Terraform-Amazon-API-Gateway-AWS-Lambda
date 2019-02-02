@@ -1,5 +1,9 @@
 resource "aws_api_gateway_rest_api" "main" {
   name = "${var.prefix}"
+
+  binary_media_types = [
+    "*/*",
+  ]
 }
 
 data "aws_api_gateway_resource" "root" {

@@ -38,8 +38,11 @@ exports.handler = (event, context, callback) => {
 			res.on('data', (chunk) => {
 				chunks.push(chunk);
 			}).on('end', () => {
-				const responseBuffer = Buffer.concat(chunks);
-				resolve(responseBuffer);
+				const bodyBuffer = Buffer.concat(chunks);
+				resolve({
+					bodyBuffer,
+					contentType: res.headers['content-type'],
+				});
 			});
 		};
 
@@ -61,18 +64,20 @@ exports.handler = (event, context, callback) => {
 					https.request(targetURL, onResponse(resolve)).on('error', reject).end();
 				});
 			}
-		}).then(responseBuffer => {
-			const responseBody = responseBuffer.toString('utf8');
+		}).then(serverResponse => {
+			const responseBody = serverResponse.bodyBuffer.toString('utf8');
 			console.info(`Request proxy completed: ${target}`);
 			console.info({
+				contentType: serverResponse.contentType,
 				responseBody,
 			});
 			const response = {
+				isBase64Encoded: true,
 				statusCode: 200,
 				headers: {
-					'Content-Type': 'text/plain',
+					'Content-Type': serverResponse.contentType || 'text/plain',
 				},
-				body: responseBody,
+				body: serverResponse.bodyBuffer.toString('base64'),
 			};
 			callback(null, response);
 		}).catch(err => {
