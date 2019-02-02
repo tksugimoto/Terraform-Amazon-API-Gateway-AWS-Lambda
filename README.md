@@ -3,6 +3,7 @@ Terraform を使って API Gateway と Lambda を構築する
 
 ## 機能
 - Lambdaに届いた Event をそのままレスポンスする
+	- `?type=echo` (デフォルト)
 
 ## 使い方
 1. 事前準備
