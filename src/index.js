@@ -34,11 +34,12 @@ exports.handler = (event, context, callback) => {
 		 * @returns {function(http.IncomingMessage): void}
 		 */
 		const onResponse = (resolve) => (res) => {
-			let rawData = '';
-			res.setEncoding('utf8').on('data', (chunk) => {
-				rawData += chunk;
+			const chunks = [];
+			res.on('data', (chunk) => {
+				chunks.push(chunk);
 			}).on('end', () => {
-				resolve(rawData);
+				const responseBuffer = Buffer.concat(chunks);
+				resolve(responseBuffer);
 			});
 		};
 
@@ -60,7 +61,8 @@ exports.handler = (event, context, callback) => {
 					https.request(targetURL, onResponse(resolve)).on('error', reject).end();
 				});
 			}
-		}).then(responseBody => {
+		}).then(responseBuffer => {
+			const responseBody = responseBuffer.toString('utf8');
 			console.info(`Request proxy completed: ${target}`);
 			console.info({
 				responseBody,
