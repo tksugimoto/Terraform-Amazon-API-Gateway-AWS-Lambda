@@ -1,4 +1,5 @@
 const url = require('url');
+const querystring = require('querystring');
 const http = require('http');
 const https = require('https');
 
@@ -28,7 +29,11 @@ exports.handler = (event, context, callback) => {
 		return;
 	}
 	if (type === EventType.Proxy) {
-		const target = event.pathParameters ? event.pathParameters.target : event.queryStringParameters.target;
+		const target = event.pathParameters ? (
+			event.pathParameters.target + (
+				event.multiValueQueryStringParameters ? `?${querystring.stringify(event.multiValueQueryStringParameters)}` : ''
+			)
+		) : event.queryStringParameters.target;
 		console.info(`Request proxy started: ${target}`);
 
 		/**
