@@ -15,7 +15,9 @@ const EventType = {
 exports.handler = (event, context, callback) => {
 	console.info(event);
 	console.info(context);
-	const type = event.queryStringParameters && event.queryStringParameters.type || EventType.Echo;
+	const type = event.path.startsWith('/proxy/') ? EventType.Proxy : (
+		event.queryStringParameters && event.queryStringParameters.type || EventType.Echo
+	);
 	if (type === EventType.Echo) {
 		console.info('echo event');
 		const response = {
@@ -26,7 +28,7 @@ exports.handler = (event, context, callback) => {
 		return;
 	}
 	if (type === EventType.Proxy) {
-		const target = event.queryStringParameters.target;
+		const target = event.pathParameters ? event.pathParameters.target : event.queryStringParameters.target;
 		console.info(`Request proxy started: ${target}`);
 
 		/**
