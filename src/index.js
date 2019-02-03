@@ -47,6 +47,7 @@ exports.handler = (event, context, callback) => {
 			}).on('end', () => {
 				const bodyBuffer = Buffer.concat(chunks);
 				resolve({
+					statusCode: res.statusCode,
 					bodyBuffer,
 					contentType: res.headers['content-type'],
 				});
@@ -99,12 +100,13 @@ exports.handler = (event, context, callback) => {
 			const responseBody = serverResponse.bodyBuffer.toString('utf8');
 			console.info(`Request proxy completed: ${target}`);
 			console.info({
+				statusCode: serverResponse.statusCode,
 				contentType: serverResponse.contentType,
 				responseBody,
 			});
 			const response = {
 				isBase64Encoded: true,
-				statusCode: 200,
+				statusCode: serverResponse.statusCode,
 				headers: {
 					'Content-Type': serverResponse.contentType || 'text/plain',
 				},
