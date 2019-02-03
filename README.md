@@ -5,8 +5,6 @@ Terraform を使って API Gateway と Lambda を構築する
 - Lambdaに届いた Event をそのままレスポンスする
 	- `?type=echo` (デフォルト)
 - 別URLへのリクエストをLambdaにプロキシさせる
-	- 制約
-		- GETリクエストのみ
 	- `?type=proxy&target=<encodedURL>`
 		- `type=proxy`
 		- `target=<encodedURL>`
