@@ -3,6 +3,17 @@ Terraform を使って API Gateway と Lambda を構築する
 
 ## 機能
 - Lambdaに届いた Event をそのままレスポンスする
+	- `?type=echo` (デフォルト)
+- 別URLへのリクエストをLambdaにプロキシさせる
+	- `?type=proxy&target=<encodedURL>`
+		- `type=proxy`
+		- `target=<encodedURL>`
+			- `target=http%3A%2F%2Fcheckip.amazonaws.com%2F`
+				- `http://checkip.amazonaws.com/`
+			- `target=https%3A%2F%2Fexample.com%2F%3Fa%3D1%26b%3D2`
+				- `https://example.com/?a=1&b=2`
+	- `/proxy/<URL>`
+		- `/proxy/http://example.com`
 
 ## 使い方
 1. 事前準備
