@@ -19,9 +19,9 @@ Terraform を使って API Gateway と Lambda を構築する
 1. 事前準備
 	1. [Terraform](https://www.terraform.io/ "https://www.terraform.io/") をインストール
 	1. 設定用ファイル (`terraform.tfvars`) を作成
-		1. [terraform.tfvars.sample](./terraform.tfvars.sample) ファイルを `terraform.tfvars` という名前でコピー
+		1. [terraform.tfvars.example](./terraform.tfvars.example) ファイルを `terraform.tfvars` という名前でコピー
 			```
-			cp terraform.tfvars.sample terraform.tfvars
+			cp terraform.tfvars.example terraform.tfvars
 			```
 		1. `terraform.tfvars` に設定を書き込む
 			* `aws_access_key`
